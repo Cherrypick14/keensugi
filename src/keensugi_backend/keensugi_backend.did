@@ -1,3 +1,41 @@
-service : {
-    "greet": (text) -> (text) query;
-}
+type ReportStatus = variant { 
+    Pending; 
+    InProgress; 
+    Resolved; 
+};
+
+type IncidentReport = record {
+    id: nat;
+    reporter: text;              // Anonymized Internet Identity principal
+    incident_type: text;
+    description: text;           // Hashed description
+    location: text;
+    date_occurred: nat;          // Timestamp (adjust if needed)
+    severity: opt text;          // Optional severity level
+    evidence: vec<text>;         // List of evidence items
+    status: ReportStatus;        // Current status of the report
+    created_at: nat;             // Timestamp of report creation
+};
+
+type Result<T> = variant {
+    ok: T;
+    err: text;
+};
+
+service: {
+    create_report: (
+        incident_type: text,
+        description: text,
+        location: text,
+        date_occurred: nat,
+        severity: opt text,
+        evidence: vec<text>,
+        created_at: nat
+    ) -> Result<nat>;
+
+    view_report: (id: nat) -> Result<IncidentReport>;
+
+    update_report_status: (id: nat, status: ReportStatus) -> Result<()>;
+
+    delete_report: (id: nat) -> Result<()>;
+};
