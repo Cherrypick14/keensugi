@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/styles.css';
+import '../styles/navbar.css'
 import { Shield } from 'lucide-react';
 
 const Footer = () => {
@@ -11,8 +12,8 @@ const Footer = () => {
           {/* Company Info */}
           <div className="footer-info">
             <div className="footer-logo">
-              <Shield className="footer-icon" />
-              <span className="footer-brand">KINTARA</span>
+            <img src="/logo.png" alt="logo" class="logo" />
+              {/* <span className="footer-brand">KINTARA</span> */}
             </div>
             <p className="footer-description">
               Empowering communities through blockchain technology
@@ -72,7 +73,7 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="footer-bottom">
           <p className="footer-bottom-text">
-            &copy; {new Date().getFullYear()} Kintara. All rights reserved.
+            &copy; {new Date().getFullYear()} Kintaraa. All rights reserved.
           </p>
         </div>
       </div>

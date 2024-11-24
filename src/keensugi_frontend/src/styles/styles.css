@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 *{
   margin:0%;
   padding: 0%;
@@ -28,12 +28,12 @@ body {
   }
   
   .nav-link:hover {
-    color: #9b59b6;
+    color: #6b21a8;
   }
   
   /* Hero */
   .hero {
-    background: url('/images/hero-bg.jpg') no-repeat center center/cover;
+    background: url('/gbv.jpeg') no-repeat center center/cover;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -52,11 +52,11 @@ body {
   }
   
   .bg-gradient-to-r {
-    background: linear-gradient(to right, #9b59b6, #8e44ad);
+    background: linear-gradient(to right, #a855f7, #6b21a8);
   }
   
   .bg-gradient-to-r-from-purple {
-    background: linear-gradient(to right, #9b59b6, #8e44ad);
+    background: linear-gradient(to right, #9333ea, #8e44ad);
   }
   
   .bg-clip-text {
@@ -97,7 +97,7 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 16px;
+  /* padding: 0 16px; */
 }
 
 .navbar-content {
@@ -368,7 +368,7 @@ button {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('/jael.jpg');
+  background-image: url('/gbv.jpeg');
   background-size: cover;
   background-position: center;
 }

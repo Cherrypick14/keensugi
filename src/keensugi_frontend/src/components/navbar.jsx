@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/styles.css';
+import '../styles/navbar.css';
 import Navlinks from './navlinks';
 import Mobilenavlinks from './mobilenavlinks';
 import { Shield, Menu } from 'lucide-react';
@@ -11,8 +12,9 @@ const Navbar = ({ scrolled, isMenuOpen, setIsMenuOpen }) => {
         <div className="navbar-content">
           {/* Logo */}
           <div className="logo">
-            <Shield className="logo-icon" />
-            <span className="logo-text">KINTARA</span>
+            {/* <Shield className="logo-icon" /> */}
+            <img src="/logo.png" alt="logo" class="logo" />
+            {/* <span className="logo-text">KINTARA</span> */}
           </div>
 
           {/* Desktop Navigation */}
