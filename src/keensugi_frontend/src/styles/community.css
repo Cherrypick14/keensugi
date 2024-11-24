@@ -1,0 +1,160 @@
+/* General styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  :root {
+    --primary-color: #a855f7;
+    --secondary-color: #6b21a8;
+    --background-dark: #1a1a1a;
+    --text-light: #ffffff;
+    --text-muted: #d8b4fe;
+  }
+  
+  body {
+    background: linear-gradient(135deg, var(--background-dark) 0%, #000000 100%);
+    color: white;
+    min-height: 100vh;
+  }
+  
+  /* Header styles */
+  .header {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 1.2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 30px rgba(168, 85, 247, 0.1);
+  }
+  
+  .nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+    letter-spacing: 2px;
+  }
+  
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .home-link {
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  
+  .home-link:hover {
+    background: var(--primary-color);
+    color: var(--text-light);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(168, 85, 247, 0.3);
+  }
+  
+  /* Section styles */
+  .section-title {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: 700;
+  }
+  
+  .section-description {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 3.5rem;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  /* Card styles */
+  .groups-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
+  }
+  
+  .group-card,
+  .proposal-card {
+    background: rgba(168, 85, 247, 0.08);
+    border-radius: 1.2rem;
+    padding: 2rem;
+    border: 1px solid rgba(168, 85, 247, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    transition: all 0.4s ease;
+  }
+  
+  .group-card:hover,
+  .proposal-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px 0 rgba(168, 85, 247, 0.25);
+  }
+  
+  .group-name,
+  .proposal-title {
+    font-size: 1.6rem;
+    color: var(--primary-color);
+    margin-bottom: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .group-details,
+  .proposal-details {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    font-size: 1.05rem;
+  }
+  
+  .group-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+  
+  /* Buttons */
+  .join-group-btn,
+  .vote-btn {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    flex: 1;
+  }
+  
+  .join-group-btn:hover,
+  .vote-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+  }
+  

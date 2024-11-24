@@ -1,41 +1,31 @@
-type ReportStatus = variant { 
-    Pending; 
-    InProgress; 
-    Resolved; 
+type Result = variant { 
+    Ok : null; 
+    Err : text 
 };
 
-type IncidentReport = record {
-    id: nat;
-    reporter: text;              // Anonymized Internet Identity principal
-    incident_type: text;
-    description: text;           // Hashed description
-    location: text;
-    date_occurred: nat;          // Timestamp (adjust if needed)
-    severity: opt text;          // Optional severity level
-    evidence: vec<text>;         // List of evidence items
-    status: ReportStatus;        // Current status of the report
-    created_at: nat;             // Timestamp of report creation
+type Report = record {
+    hash : text;                                   // Unique identifier for the report (hash)
+    incident_type : text;                          // Type of the incident
+    description : text;                            // Description of the incident
+    location : text;                               // Location of the incident
+    severity_level : text;                         // Severity level of the report
+    evidence : vec text;                           // List of evidence for the report
+    reporter_id : principal;                       // ID of the reporter who filed the report
 };
 
-type Result<T> = variant {
-    ok: T;
-    err: text;
+type ReportInput = record {
+    incident_type : text;                          // Type of the incident
+    description : text;                            // Description of the incident
+    location : text;                               // Location of the incident
+    severity_level : text;                         // Severity level of the report
+    evidence : vec text;                           // List of evidence for the report
 };
 
-service: {
-    create_report: (
-        incident_type: text,
-        description: text,
-        location: text,
-        date_occurred: nat,
-        severity: opt text,
-        evidence: vec<text>,
-        created_at: nat
-    ) -> Result<nat>;
-
-    view_report: (id: nat) -> Result<IncidentReport>;
-
-    update_report_status: (id: nat, status: ReportStatus) -> Result<()>;
-
-    delete_report: (id: nat) -> Result<()>;
+service : {
+    // Report Management
+    create_report : (ReportInput, principal) -> (Result);  // Creates a report and returns its hash
+    get_report : (text) -> (opt Report);                    // Fetches a report by its hash
+    update_report : (text, ReportInput, principal) -> (Result);  // Updates an existing report
+    delete_report : (text, principal) -> (Result);          // Deletes a report by its hash
+    list_reports : (principal) -> (Result, vec Report);     // Lists all reports (admin access only)
 };

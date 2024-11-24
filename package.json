@@ -14,5 +14,10 @@
   "type": "module",
   "workspaces": [
     "src/keensugi_frontend"
-  ]
+  ],
+  "dependencies": {
+    "lucide-react": "^0.460.0",
+    "react-router-dom": "^7.0.1",
+    "recharts": "^2.13.3"
+  }
 }
