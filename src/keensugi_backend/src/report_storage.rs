@@ -1,68 +1,72 @@
-use std::collections::HashMap;
-use std::sync::RwLock;
-// use candid::Principal;
+use std::cell::RefCell;
 use crate::report::Report;
+use candid::Nat;
 
-/// Struct to handle storage of reports
-#[derive(Debug)]
-pub struct ReportStorage {
-    reports: RwLock<HashMap<String, Report>>, // In-memory storage for reports
+thread_local! {
+    pub static REPORTS: RefCell<Vec<Report>> = RefCell::new(Vec::new());
 }
 
-impl ReportStorage {
-    /// Creates a new `ReportStorage` instance
-    pub fn new() -> Self {
-        Self {
-            reports: RwLock::new(HashMap::new()),
-        }
-    }
-
-    /// Adds a new report to the storage
-    pub fn add_report(&self, report: Report) -> Result<(), String> {
-        let hash = report.hash.clone();
-        let mut storage = self.reports.write().map_err(|_| "Storage lock error")?;
-        
-        if storage.contains_key(&hash) {
-            Err("Report with the same hash already exists.".to_string())
-        } else {
-            storage.insert(hash, report);
-            Ok(())
-        }
-    }
-
-    /// Retrieves a report by its hash
-    pub fn get_report(&self, hash: &str) -> Option<Report> {
-        let storage = self.reports.read().ok()?;
-        storage.get(hash).cloned()
-    }
-
-    /// Updates an existing report
-    pub fn update_report(&self, hash: &str, updated_report: Report) -> Result<(), String> {
-        let mut storage = self.reports.write().map_err(|_| "Storage lock error")?;
-        
-        if storage.contains_key(hash) {
-            storage.insert(hash.to_string(), updated_report);
-            Ok(())
-        } else {
-            Err("Report not found.".to_string())
-        }
-    }
-
-    /// Deletes a report by its hash
-    pub fn delete_report(&self, hash: &str) -> Result<(), String> {
-        let mut storage = self.reports.write().map_err(|_| "Storage lock error")?;
-        
-        if storage.remove(hash).is_some() {
-            Ok(())
-        } else {
-            Err("Report not found.".to_string())
-        }
-    }
-
-    /// Lists all stored reports
-    pub fn list_reports(&self) -> Vec<Report> {
-        let storage = self.reports.read().expect("Storage lock error");
-        storage.values().cloned().collect()
-    }
+// Function to add a report
+pub fn add_report(mut report: Report) -> Nat {
+    REPORTS.with(|reports| {
+        let mut reports = reports.borrow_mut();
+        report.id = Nat::from(reports.len() as u64 + 1); // Assign a unique ID as Nat.
+        reports.push(report.clone());
+        report.id
+    })
 }
 
+// Function to get a report by ID
+pub fn get_report(id: Nat) -> Option<Report> {
+    REPORTS.with(|reports| {
+        reports
+            .borrow()
+            .iter()
+            .find(|r| r.id == id)
+            .cloned()
+    })
+}
+
+// Function to fetch all reports
+pub fn fetch_reports() -> Vec<Report> {
+    REPORTS.with(|reports| reports.borrow().clone())
+}
+
+// Function to update a report
+pub fn update_report(
+    id: Nat,
+    incident_type: String,
+    description: String,
+    date: String,
+    location: String,
+    severity_level: String, // Update severity level.
+    evidence: Vec<String>,  // Include evidence in updates.
+) -> bool {
+    let mut updated = false;
+    REPORTS.with(|reports| {
+        let mut reports = reports.borrow_mut();
+        if let Some(report) = reports.iter_mut().find(|r| r.id == id) {
+            report.incident_type = incident_type;
+            report.description = description;
+            report.date = date;
+            report.location = location;
+            report.severity_level = severity_level;
+            report.evidence = evidence;
+            updated = true;
+        }
+    });
+    updated
+}
+
+// Function to delete a report
+pub fn delete_report(id: Nat) -> bool {
+    let mut deleted = false;
+    REPORTS.with(|reports| {
+        let mut reports = reports.borrow_mut();
+        if let Some(pos) = reports.iter().position(|r| r.id == id) {
+            reports.remove(pos);
+            deleted = true;
+        }
+    });
+    deleted
+}
